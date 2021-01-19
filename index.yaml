@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  unifi:
+  - apiVersion: v2
+    appVersion: 6.0.43
+    created: "2021-01-18T18:10:50.487726-08:00"
+    description: A Helm chart for Kubernetes
+    digest: d47521450d4ffc8b3b04e260104bb92a15e07c732e7f2fd031bb6e1463a087fb
+    name: unifi
+    type: application
+    urls:
+    - https://jamesgoodhouse.github.io/helm-charts/unifi-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-01-18T18:10:50.487092-08:00"

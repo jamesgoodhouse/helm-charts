@@ -1,0 +1,26 @@
+{{- if .Values.ingressroute.enabled -}}
+{{- $fullName := include "unifi.fullname" . -}}
+{{- $svcPort := .Values.service.port -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "unifi.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - kind: Rule
+    match: Host(`{{ .Values.ingressroute.host}}`)
+    services:
+    - kind: Service
+      name: https-gui
+      port: https-gui
+  tls:
+    passthrough: true
+{{- end }}
