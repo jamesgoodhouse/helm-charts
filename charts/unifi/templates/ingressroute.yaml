@@ -1,6 +1,5 @@
 {{- if .Values.ingressroute.enabled -}}
 {{- $fullName := include "unifi.fullname" . -}}
-{{- $svcPort := .Values.service.port -}}
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
