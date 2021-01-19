@@ -10,5 +10,6 @@ entries:
     type: application
     urls:
     - https://jamesgoodhouse.github.io/helm-charts/unifi-0.1.0.tgz
+    - https://james.goodhouse.io/helm-charts/unifi-0.1.0.tgz
     version: 0.1.0
 generated: "2021-01-18T18:10:50.487092-08:00"

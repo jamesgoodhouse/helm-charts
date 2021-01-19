@@ -20,7 +20,7 @@ spec:
     services:
     - kind: Service
       name: https-gui
-      port: https-gui
+      port: 8443
   tls:
     passthrough: true
 {{- end }}
