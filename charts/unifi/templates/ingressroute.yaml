@@ -6,7 +6,7 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- include "unifi.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
+  {{- with .Values.ingressroute.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
