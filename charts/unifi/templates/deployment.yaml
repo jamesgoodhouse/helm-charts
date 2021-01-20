@@ -62,6 +62,19 @@ spec:
             port: https-gui
             scheme: HTTPS
           initialDelaySeconds: 15
+        volumeMounts:
+        - mountPath: /unifi/data
+          name: unifi-data
+          subPath: {{ ternary "data" (printf "%s/%s" .Values.persistence.subPath "data") (empty .Values.persistence.subPath) }}
+        - mountPath: /unifi/log
+          name: unifi-data
+          subPath: {{ ternary "log" (printf "%s/%s" .Values.persistence.subPath "log") (empty .Values.persistence.subPath) }}
+        - mountPath: /unifi/cert
+          name: unifi-data
+          subPath: {{ ternary "cert" (printf "%s/%s" .Values.persistence.subPath "cert") (empty .Values.persistence.subPath) }}
+        - mountPath: /unifi/init.d
+          name: unifi-data
+          subPath: {{ ternary "init.d" (printf "%s/%s" .Values.persistence.subPath "init.d") (empty .Values.persistence.subPath) }}
         resources:
           {{- toYaml .Values.resources | nindent 10 }}
       {{- with .Values.nodeSelector }}
@@ -76,3 +89,11 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+      - name: unifi-data
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ include "unifi.fullname" . }}
+      {{- else }}
+        emptyDir: {}
+      {{ end }}

@@ -18,7 +18,7 @@ spec:
     match: Host(`{{ .Values.ingressroute.host}}`)
     services:
     - kind: Service
-      name: https-gui
+      name: {{ $fullName }}
       port: 8443
   tls:
     passthrough: true
