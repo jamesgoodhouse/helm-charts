@@ -20,17 +20,9 @@ spec:
     port: 8443
     targetPort: https-gui
     protocol: TCP
-  - name: speedtest
-    port: 6789
-    targetPort: speedtest
-    protocol: TCP
   - name: stun
     port: 3478
     targetPort: stun
-    protocol: UDP
-  - name: syslog
-    port: 5514
-    targetPort: syslog
     protocol: UDP
   selector:
     {{- include "unifi.selectorLabels" . | nindent 4 }}
