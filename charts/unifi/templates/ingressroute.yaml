@@ -38,7 +38,7 @@ spec:
   - webalt
   routes:
   - kind: Rule
-    match: Host(`{{ .Values.ingressroute.host }}`)
+    match: HostSNI(`*`)
     services:
     - kind: Service
       name: {{ $fullName }}
@@ -58,9 +58,7 @@ spec:
   entryPoints:
   - unifi-discovery
   routes:
-  - kind: Rule
-    match: Host(`{{ .Values.ingressroute.host }}`)
-    services:
+  - services:
     - kind: Service
       name: {{ $fullName }}
       port: 10001
@@ -79,9 +77,7 @@ spec:
   entryPoints:
   - unifi-stun
   routes:
-  - kind: Rule
-    match: Host(`{{ .Values.ingressroute.host }}`)
-    services:
+  - services:
     - kind: Service
       name: {{ $fullName }}
       port: 3478
