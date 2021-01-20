@@ -3,7 +3,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: {{ $fullName }}
+  name: {{ $fullName }}-gui
   labels:
     {{- include "unifi.labels" . | nindent 4 }}
   {{- with .Values.ingressroute.annotations }}
@@ -15,11 +15,74 @@ spec:
   - websecure
   routes:
   - kind: Rule
-    match: Host(`{{ .Values.ingressroute.host}}`)
+    match: Host(`{{ .Values.ingressroute.host }}`)
     services:
     - kind: Service
       name: {{ $fullName }}
       port: 8443
   tls:
     passthrough: true
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}-controller
+  labels:
+    {{- include "unifi.labels" . | nindent 4 }}
+  {{- with .Values.ingressroute.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  entryPoints:
+  - webalt
+  routes:
+  - kind: Rule
+    match: Host(`{{ .Values.ingressroute.host }}`)
+    services:
+    - kind: Service
+      name: {{ $fullName }}
+      port: 8080
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}-discovery
+  labels:
+    {{- include "unifi.labels" . | nindent 4 }}
+  {{- with .Values.ingressroute.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  entryPoints:
+  - unifi-discovery
+  routes:
+  - kind: Rule
+    match: Host(`{{ .Values.ingressroute.host }}`)
+    services:
+    - kind: Service
+      name: {{ $fullName }}
+      port: 10001
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}-stun
+  labels:
+    {{- include "unifi.labels" . | nindent 4 }}
+  {{- with .Values.ingressroute.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  entryPoints:
+  - unifi-stun
+  routes:
+  - kind: Rule
+    match: Host(`{{ .Values.ingressroute.host }}`)
+    services:
+    - kind: Service
+      name: {{ $fullName }}
+      port: 3478
 {{- end }}
