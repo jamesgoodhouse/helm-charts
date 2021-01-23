@@ -1,9 +1,10 @@
 {{- if .Values.ingressroute.enabled -}}
 {{- $fullName := include "unifi.fullname" . -}}
+---
 apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+kind: IngressRouteTCP
 metadata:
-  name: {{ $fullName }}-gui
+  name: {{ $fullName }}-controller
   labels:
     {{- include "unifi.labels" . | nindent 4 }}
   {{- with .Values.ingressroute.annotations }}
@@ -12,14 +13,12 @@ metadata:
   {{- end }}
 spec:
   entryPoints:
-  - websecure
+  - webalt
   routes:
   - kind: Rule
-    match: Host(`{{ .Values.ingressroute.host }}`)
+    match: HostSNI(`*`)
     services:
     - kind: Service
       name: {{ $fullName }}
-      port: 8443
-  tls:
-    passthrough: true
+      port: 8080
 {{- end }}

@@ -1,0 +1,40 @@
+{{- if .Values.ingressroute.enabled -}}
+{{- $fullName := include "unifi.fullname" . -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: {{ $fullName }}-discovery
+  labels:
+    {{- include "unifi.labels" . | nindent 4 }}
+  {{- with .Values.ingressroute.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  entryPoints:
+  - unifi-discovery
+  routes:
+  - services:
+    - kind: Service
+      name: {{ $fullName }}
+      port: 10001
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: {{ $fullName }}-stun
+  labels:
+    {{- include "unifi.labels" . | nindent 4 }}
+  {{- with .Values.ingressroute.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  entryPoints:
+  - unifi-stun
+  routes:
+  - services:
+    - kind: Service
+      name: {{ $fullName }}
+      port: 3478
+{{- end }}
