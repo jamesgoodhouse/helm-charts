@@ -22,4 +22,5 @@ spec:
       port: 8443
   tls:
     passthrough: true
+    certResolver: letsencrypt
 {{- end }}
