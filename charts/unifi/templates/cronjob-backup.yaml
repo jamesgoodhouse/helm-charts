@@ -29,9 +29,15 @@ spec:
             - mountPath: /unifi/data
               name: unifi-data
               subPath: {{ ternary "data" (printf "%s/%s" .Values.persistence.subPath "data") (empty .Values.persistence.subPath) }}
+            - mountPath: /root/ssh
+              name: backup_ssh_key
+              readOnly: true
           restartPolicy: Never
           volumes:
           - name: unifi-data
             persistentVolumeClaim:
               claimName: {{ include "unifi.fullname" . }}
+          - name: backup_ssh_key
+            secret:
+              secretName: {{ include "unifi.fullname" . }}-ssh-key
 {{- end -}}
