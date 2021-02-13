@@ -7,9 +7,9 @@ metadata:
     {{- include "unifi.labels" . | nindent 4 }}
 spec:
   schedule: "0 10 * * 7"
-  activeDeadlineSeconds: 120
   jobTemplate:
     spec:
+      activeDeadlineSeconds: 120
       template:
         spec:
           containers:
