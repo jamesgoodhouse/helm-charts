@@ -36,7 +36,6 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-
 persistence:
   enabled: true
   accessModes:
@@ -48,6 +47,13 @@ ingressroute:
   enabled: false
   annotations: {}
   host: ""
+
+rsync-backup:
+  enabled: false
+  backup_dir_path: ""
+  config_dir_path: /unifi/data/backup/autobackup/ # trailing slash is important for rsync
+  ip: ""
+  user: backup-unifi
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

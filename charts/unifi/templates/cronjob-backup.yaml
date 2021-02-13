@@ -1,0 +1,37 @@
+{{- if .Values.rsync-backup.enabled -}}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "unifi.fullname" . }}-config-backup
+  labels:
+    {{- include "unifi.labels" . | nindent 4 }}
+spec:
+  schedule: "0 10 * * 7"
+  activeDeadlineSeconds: 120
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: pebalk/rsync
+            imagePullPolicy: IfNotPresent
+            command: ["/usr/bin/rsync"]
+            args:
+            - "--archive"
+            - "--compress"
+            - "--delete"
+            - "--verbose"
+            - "--rsh \"ssh -i /root/ssh/id_rsa\""
+            - "{{ .Values.rsync-backup.config_dir_path  }}"
+            - "{{ .Values.rsync-backup.user }}@{{ .Values.rsync-backup.ip }}::{{ .Values.rsync-backup.backup_dir_path}}"
+            volumeMounts:
+            - mountPath: /unifi/data
+              name: unifi-data
+              subPath: {{ ternary "data" (printf "%s/%s" .Values.persistence.subPath "data") (empty .Values.persistence.subPath) }}
+          restartPolicy: Never
+          volumes:
+          - name: unifi-data
+            persistentVolumeClaim:
+              claimName: {{ include "unifi.fullname" . }}
+{{- end }}
