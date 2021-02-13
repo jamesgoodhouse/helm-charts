@@ -48,7 +48,7 @@ ingressroute:
   annotations: {}
   host: ""
 
-rsync-backup:
+rsync_backup:
   enabled: false
   backup_dir_path: ""
   config_dir_path: /unifi/data/backup/autobackup/ # trailing slash is important for rsync

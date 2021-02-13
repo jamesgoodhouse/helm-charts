@@ -1,4 +1,4 @@
-{{- if .Values.rsync-backup.enabled -}}
+{{- if .Values.rsync_backup.enabled -}}
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
@@ -23,8 +23,8 @@ spec:
             - "--delete"
             - "--verbose"
             - "--rsh \"ssh -i /root/ssh/id_rsa\""
-            - "{{ .Values.rsync-backup.config_dir_path  }}"
-            - "{{ .Values.rsync-backup.user }}@{{ .Values.rsync-backup.ip }}::{{ .Values.rsync-backup.backup_dir_path}}"
+            - "{{ .Values.rsync_backup.config_dir_path  }}"
+            - "{{ .Values.rsync_backup.user }}@{{ .Values.rsync_backup.ip }}::{{ .Values.rsync_backup.backup_dir_path}}"
             volumeMounts:
             - mountPath: /unifi/data
               name: unifi-data
@@ -34,4 +34,4 @@ spec:
           - name: unifi-data
             persistentVolumeClaim:
               claimName: {{ include "unifi.fullname" . }}
-{{- end }}
+{{- end -}}
