@@ -22,7 +22,7 @@ spec:
             - "--compress"
             - "--delete"
             - "--verbose"
-            - "--rsh \"ssh -i /root/ssh/.id_rsa\""
+            - "-e 'ssh -i /root/.ssh/id_rsa'"
             - "{{ .Values.rsync_backup.config_dir_path  }}"
             - "{{ .Values.rsync_backup.user }}@{{ .Values.rsync_backup.ip }}::{{ .Values.rsync_backup.backup_dir_path}}"
             volumeMounts:
