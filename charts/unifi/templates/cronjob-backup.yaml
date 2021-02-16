@@ -22,14 +22,14 @@ spec:
             - "--compress"
             - "--delete"
             - "--verbose"
-            - "--rsh \"ssh -i /root/ssh/id_rsa\""
+            - "--rsh \"ssh -i /root/ssh/.id_rsa\""
             - "{{ .Values.rsync_backup.config_dir_path  }}"
             - "{{ .Values.rsync_backup.user }}@{{ .Values.rsync_backup.ip }}::{{ .Values.rsync_backup.backup_dir_path}}"
             volumeMounts:
             - mountPath: /unifi/data
               name: unifi-data
               subPath: {{ ternary "data" (printf "%s/%s" .Values.persistence.subPath "data") (empty .Values.persistence.subPath) }}
-            - mountPath: /root/ssh
+            - mountPath: /root/.ssh
               name: backup-ssh-key
               readOnly: true
           restartPolicy: Never
@@ -40,4 +40,5 @@ spec:
           - name: backup-ssh-key
             secret:
               secretName: {{ include "unifi.fullname" . }}-ssh-key
+              defaultMode: 0400
 {{- end -}}
