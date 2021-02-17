@@ -40,6 +40,6 @@ spec:
               claimName: {{ include "unifi.fullname" . }}
           - name: backup-ssh-key
             secret:
-              secretName: {{ include "unifi.fullname" . }}-ssh-key
+              secretName: {{ include "unifi.fullname" . }}-ssh
               defaultMode: 0400
 {{- end -}}
