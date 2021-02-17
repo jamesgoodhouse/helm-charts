@@ -31,14 +31,14 @@ spec:
               name: unifi-data
               subPath: {{ ternary "data" (printf "%s/%s" .Values.persistence.subPath "data") (empty .Values.persistence.subPath) }}
             - mountPath: /root/.ssh
-              name: backup-ssh-key
+              name: ssh
               readOnly: true
           restartPolicy: Never
           volumes:
           - name: unifi-data
             persistentVolumeClaim:
               claimName: {{ include "unifi.fullname" . }}
-          - name: backup-ssh-key
+          - name: ssh
             secret:
               secretName: {{ include "unifi.fullname" . }}-ssh
               defaultMode: 0400
