@@ -7,13 +7,14 @@ metadata:
     {{- include "unifi.labels" . | nindent 4 }}
 spec:
   schedule: "{{ .Values.rsync_backup.schedule }}"
+  concurrencyPolicy: Deny
   jobTemplate:
     spec:
       activeDeadlineSeconds: 120
       template:
         spec:
           containers:
-          - name: hello
+          - name: rsync
             image: pebalk/rsync
             imagePullPolicy: IfNotPresent
             command: ["/usr/bin/rsync"]
