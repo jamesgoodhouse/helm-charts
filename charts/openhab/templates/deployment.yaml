@@ -79,22 +79,7 @@ spec:
         env:
           {{- include "openhab.extraEnvironmentVars" .Values.server | nindent 10 }}
         volumeMounts:
-        - name: zstick-zwave
-          mountPath: /dev/ttyUSB0
-        - name: zstick-zigbee
-          mountPath: /dev/ttyUSB1
-        - name: openhab
-          mountPath: /openhab/conf
-          subPath: conf
-        - name: openhab
-          mountPath: /openhab/addons
-          subPath: addons
-        - name: openhab
-          mountPath: /openhab/userdata
-          subPath: userdata
-        - name: tz-config
-          mountPath: /etc/localtime
-          readOnly: true
+          {{- toYaml .Values.volumeMounts | nindent 8 }}
 
       {{- with .Values.nodeSelector }}
       nodeSelector:
