@@ -30,8 +30,10 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
 
+      {{- if .Values.volumes }}
       volumes:
         {{- toYaml .Values.volumes | nindent 6 }}
+      {{- end }}
 
       {{- if .Values.extraInitContainers }}
       initContainers:
@@ -51,9 +53,11 @@ spec:
         securityContext:
           {{- toYaml .Values.securityContext | nindent 10 }}
         env:
-          {{- include "openhab.extraEnvironmentVars" .Values.server | nindent 10 }}
+          {{- include "openhab.extraEnvironmentVars" .Values | nindent 10 }}
+        {{- if .Values.volumeMounts }}
         volumeMounts:
           {{- toYaml .Values.volumeMounts | nindent 8 }}
+        {{- end }}
 
       {{- with .Values.nodeSelector }}
       nodeSelector:
