@@ -32,12 +32,12 @@ spec:
 
       {{- if .Values.volumes }}
       volumes:
-        {{- toYaml .Values.volumes | nindent 6 }}
+      {{- toYaml .Values.volumes | nindent 6 }}
       {{- end }}
 
       {{- if .Values.extraInitContainers }}
       initContainers:
-        {{ toYaml .Values.extraInitContainers | nindent 6}}
+      {{ toYaml .Values.extraInitContainers | nindent 6}}
       {{- end }}
 
       containers:
@@ -56,7 +56,7 @@ spec:
           {{- include "openhab.extraEnvironmentVars" .Values | nindent 10 }}
         {{- if .Values.volumeMounts }}
         volumeMounts:
-          {{- toYaml .Values.volumeMounts | nindent 8 }}
+        {{- toYaml .Values.volumeMounts | nindent 8 }}
         {{- end }}
 
       {{- with .Values.nodeSelector }}
