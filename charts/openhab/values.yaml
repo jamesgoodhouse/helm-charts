@@ -97,6 +97,25 @@ volumes:
     path: /usr/share/zoneinfo/America/Los_Angeles
     type: File
 
+extraInitContainers:
+- name: init-openhab
+  image: busybox:latest
+  imagePullPolicy: Always
+  command:
+  - sh
+  - -c
+  - |
+    while [ ! $(ls /final_configs | wc -l) -gt 0 ]; do
+      echo 'no configs found; waiting 5s'
+      sleep 5
+    done
+    echo 'configs found; starting'
+  volumeMounts:
+  - name: openhab
+    mountPath: /final_configs
+    subPath: conf
+    readOnly: true
+
 volumeMounts:
 - name: zstick-zwave
   mountPath: /dev/ttyUSB0
