@@ -67,7 +67,7 @@ Inject extra environment vars in the format key:value, if populated
 {{- define "openhab.extraEnvironmentVars" -}}
 {{- if .extraEnvironmentVars -}}
 {{- range $key, $value := .extraEnvironmentVars }}
-- name: {{ printf "%s" $key | replace "." "_" | upper | quote }}
+- name: {{ printf "%s" $key | replace "." "_" | upper }}
   value: {{ $value | quote }}
 {{- end }}
 {{- end -}}
