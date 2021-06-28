@@ -78,3 +78,5 @@ volumes: []
 initContainers: []
 
 volumeMounts: []
+
+userDefinedTemplates: []
