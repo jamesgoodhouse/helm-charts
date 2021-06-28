@@ -80,3 +80,6 @@ initContainers: []
 volumeMounts: []
 
 userDefinedTemplates: []
+# userDefinedTemplates:
+#   - |
+#     key: {{ .Values.something }}

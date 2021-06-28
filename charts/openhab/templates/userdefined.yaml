@@ -1,4 +1,4 @@
 {{- range .Values.userDefinedTemplates }}
 ---
-{{- toYaml . }}
+{{ tpl . $ }}
 {{- end }}
