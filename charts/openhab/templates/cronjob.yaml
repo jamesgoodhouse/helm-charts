@@ -22,9 +22,10 @@ spec:
             env:
             - name: CONFIGS_REPO_URL
               value: {{ required "A valid .Values.configBuilder.configsRepoURL entry required" .Values.configBuilder.configsRepoURL }}
+            {{- with .Values.configBuilder.envFrom }}
             envFrom:
-            - secretRef:
-                name: influxdb-auth
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
           restartPolicy: {{ .Values.configBuilder.restartPolicy }}
           {{- with .Values.configBuilder.volumes }}
           volumes:
