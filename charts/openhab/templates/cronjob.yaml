@@ -1,0 +1,32 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: build-openhab-configs
+  labels:
+    {{- include "openhab.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.configBuilder.schedule | quote }}
+  concurrencyPolicy: {{ .Values.configBuilder.concurrencyPolicy }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: build-openhab-configs
+            image: "{{ .Values.configBuilder.image.repository }}:{{ .Values.configBuilder.image.tag | default "latest" }}"
+            imagePullPolicy: {{ .Values.configBuilder.image.pullPolicy }}
+            {{- with .Values.configBuilder.volumeMounts }}
+            volumeMounts:
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
+            env:
+            - name: CONFIGS_REPO_URL
+              value: {{ required "A valid .Values.configBuilder.configsRepoURL entry required" .Values.configBuilder.configsRepoURL }}
+            envFrom:
+            - secretRef:
+                name: influxdb-auth
+          restartPolicy: {{ .Values.configBuilder.restartPolicy }}
+          {{- with .Values.configBuilder.volumes }}
+          volumes:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}

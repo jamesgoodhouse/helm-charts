@@ -1,4 +1,0 @@
-{{- range .Values.userDefinedTemplates }}
----
-{{ tpl . $ }}
-{{- end }}

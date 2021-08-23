@@ -34,6 +34,20 @@ service:
   port: 80
   targetPort: 8080
 
+configYaml: ""
+
+configBuilder:
+  concurrencyPolicy: Forbid
+  image:
+    repository: jgoodhouse/openhab-configs-builder
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  restartPolicy: Never
+  schedule: "* * * * *"
+  volumeMounts: []
+  volumes: []
+
 ingress:
   enabled: false
   annotations: {}
@@ -78,8 +92,3 @@ volumes: []
 initContainers: []
 
 volumeMounts: []
-
-userDefinedTemplates: []
-# userDefinedTemplates:
-#   - |
-#     key: {{ .Values.something }}
