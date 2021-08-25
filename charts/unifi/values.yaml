@@ -47,9 +47,7 @@ ingressroute:
   enabled: false
   annotations: {}
   host: ""
-  tls:
-    cert_resolver: ""
-    secret_name: ""
+  tls: {}
 
 rsync_backup:
   enabled: false

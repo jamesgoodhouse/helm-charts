@@ -20,12 +20,8 @@ spec:
     - kind: Service
       name: {{ $fullName }}
       port: 8443
+  {{- with .Values.ingressroute.tls }}
   tls:
-    passthrough: true
-    {{- with .Values.ingressroute.tls.cert_resolver }}
-    certResolver: {{- . }}
-    {{- end }}
-    {{- with .Values.ingressroute.tls.secret_name }}
-    secretName: {{- . }}
-    {{- end }}
+    {{- toYaml . | nindent 4}}
+  {{- end }}
 {{- end }}
