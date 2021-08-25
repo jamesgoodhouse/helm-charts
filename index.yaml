@@ -3,9 +3,9 @@ entries:
   unifi:
   - apiVersion: v2
     appVersion: 6.0.45
-    created: "2021-08-25T13:36:00.59024-07:00"
+    created: "2021-08-25T13:56:01.115915-07:00"
     description: A Helm chart for Kubernetes
-    digest: e9e7bd9eae32b1089191ef6f31a1f47e707a310416d3a76be8e6777e12f5102a
+    digest: df9c17f78b96cccfffe00169857b450c291e475a32abaf343f84c4058bbf5848
     name: unifi
     type: application
     urls:
