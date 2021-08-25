@@ -22,5 +22,10 @@ spec:
       port: 8443
   tls:
     passthrough: true
-    certResolver: letsencrypt
+    {{- with .Values.ingressroute.tls.cert_resolver }}
+    certResolver: {{- . }}
+    {{- end }}
+    {{- with .Values.ingressroute.tls.secret_name }}
+    secretName: {{- . }}
+    {{- end }}
 {{- end }}
