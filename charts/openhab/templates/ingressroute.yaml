@@ -1,0 +1,27 @@
+{{- if .Values.ingressroute.enabled -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "openhab.fullname" . }}
+  labels:
+    {{- include "openhab.labels" . | nindent 4 }}
+  {{- with .Values.ingressroute.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - kind: Rule
+    match: Host(`{{ required "A valid .Values.ingressroute.host entry required!" .Values.ingressroute.host }}`)
+    services:
+    - kind: Service
+      name: {{ include "openhab.fullname" . }}
+      namespace: {{ .Release.Namespace }}
+      port: {{ .Values.service.port }}
+  {{- with .Values.ingressroute.tls }}
+  tls:
+    {{- toYaml . | nindent 4 }}
+  {{- end}}
+{{- end }}

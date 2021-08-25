@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "openhab.fullname" . }}
+  labels:
+    {{- include "openhab.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "openhab.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "openhab.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - name: http
+          containerPort: {{ .Values.server.settings.httpPort }}
+          protocol: TCP
+        {{- with .Values.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.securityContext }}
+        securityContext:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        env:
+          - name: CRYPTO_POLICY
+            value: {{ .Values.server.settings.cryptoPolicy | quote }}
+          - name: EXTRA_JAVA_OPTS
+            value: {{ .Values.server.settings.extraJavaOpts | quote }}
+          - name: EXTRA_SHELL_OPTS
+            value: {{ .Values.server.settings.extraShellOpts | quote }}
+          - name: LANG
+            value: {{ .Values.server.settings.language | quote }}
+          - name: LANGUAGE
+            value: {{ .Values.server.settings.language | quote }}
+          - name: LC_ALL
+            value: {{ .Values.server.settings.language | quote }}
+          - name: OPENHAB_HTTP_PORT
+            value: {{ .Values.server.settings.httpPort | quote }}
+          - name: OPENHAB_HTTPS_PORT
+            value: {{ .Values.server.settings.httpsPort | quote }}
+          {{- include "openhab.extraEnvironmentVars" .Values | nindent 10 }}
+        {{- with .Values.volumeMounts }}
+        volumeMounts:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+      {{- if .Values.dnsPolicy }}
+      dnsPolicy: {{ .Values.dnsPolicy }}
+      {{- end }}
+      {{- if .Values.hostNetwork }}
+      hostNetwork: {{ .Values.hostNetwork }}
+      {{- end }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.initContainers }}
+      initContainers:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "openhab.serviceAccountName" . }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
