@@ -66,6 +66,12 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+ingressroute:
+  enabled: false
+  host: ""
+  annotations: {}
+  tls: {}
+
 extraEnvironmentVars: {}
 
 server:
