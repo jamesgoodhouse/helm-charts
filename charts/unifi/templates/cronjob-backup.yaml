@@ -25,7 +25,7 @@ spec:
             - "--verbose"
             - "-e ssh"
             - "{{ .Values.rsync_backup.config_dir_path  }}"
-            - "{{ .Values.rsync_backup.user }}@{{ .Values.rsync_backup.ip }}::{{ .Values.rsync_backup.backup_dir_path}}"
+            - "{{ .Values.rsync_backup.user }}@{{ .Values.rsync_backup.address }}::{{ .Values.rsync_backup.backup_dir_path}}"
             volumeMounts:
             - mountPath: /unifi/data
               name: unifi-data

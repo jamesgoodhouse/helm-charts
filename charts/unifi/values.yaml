@@ -53,7 +53,7 @@ rsync_backup:
   enabled: false
   backup_dir_path: ""
   config_dir_path: /unifi/data/backup/autobackup/ # trailing slash is important for rsync
-  ip: ""
+  address: ""
   schedule: "0 10 * * 6"
   user: backup-unifi
 
