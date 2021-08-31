@@ -3,7 +3,17 @@ entries:
   openhab:
   - apiVersion: v2
     appVersion: 3.1.0
-    created: "2021-08-30T20:50:58.617019-07:00"
+    created: "2021-08-30T21:09:47.059578-07:00"
+    description: A Helm chart for Kubernetes
+    digest: 58716e730bf13b493c7fbad6980e7773b6f6f55bf125c4d8e8546bbe368289e4
+    name: openhab
+    type: application
+    urls:
+    - https://jamesgoodhouse.github.io/helm-charts/openhab-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 3.1.0
+    created: "2021-08-30T21:09:47.058593-07:00"
     description: A Helm chart for Kubernetes
     digest: a923b62f51e06c08ca2bcb5c92f03f654e154fa22720a625805bf6b34df2a0c6
     name: openhab
