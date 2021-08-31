@@ -47,6 +47,7 @@ configBuilder:
   schedule: "* * * * *"
   volumeMounts: []
   volumes: []
+  env: []
   envFrom: []
 
 ingress:

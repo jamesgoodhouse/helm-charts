@@ -22,6 +22,10 @@ spec:
             env:
             - name: CONFIGS_REPO_URL
               value: {{ required "A valid .Values.configBuilder.configsRepoURL entry required" .Values.configBuilder.configsRepoURL }}
+            {{- with .Values.configBuilder.env }}
+            env:
+              {{- toYaml . | nindent 14 }}
+            {{- end}}
             {{- with .Values.configBuilder.envFrom }}
             envFrom:
               {{- toYaml . | nindent 14 }}

@@ -1,3 +1,4 @@
+{{- with .Values.configYaml -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -7,3 +8,4 @@ metadata:
 data:
   config.yaml: |
     {{- .Values.configYaml | nindent 4 }}
+{{- end }}
