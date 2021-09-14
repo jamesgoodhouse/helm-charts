@@ -44,6 +44,7 @@ configBuilder:
     # Overrides the image tag whose default is the chart appVersion.
     tag: ""
   restartPolicy: Never
+  resources: {}
   schedule: "* * * * *"
   volumeMounts: []
   volumes: []

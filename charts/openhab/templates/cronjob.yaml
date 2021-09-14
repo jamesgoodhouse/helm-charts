@@ -29,6 +29,10 @@ spec:
             envFrom:
               {{- toYaml . | nindent 14 }}
             {{- end }}
+            {{- with .Values.configBuilder.resources }}
+            resources:
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
           restartPolicy: {{ .Values.configBuilder.restartPolicy }}
           {{- with .Values.configBuilder.volumes }}
           volumes:
