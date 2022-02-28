@@ -31,9 +31,9 @@ spec:
           {{- toYaml .Values.securityContext | nindent 10 }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        {{- if .extraEnvironmentVars -}}
+        {{- if .Values.extraEnvironmentVars -}}
         env:
-          {{- include "vault.extraEnvironmentVars" .Values | nindent 10 }}
+          {{- include "unifi.extraEnvironmentVars" . | nindent 10 }}
         {{- end }}
         ports:
         - name: controller
