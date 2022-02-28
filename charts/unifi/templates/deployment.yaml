@@ -31,10 +31,9 @@ spec:
           {{- toYaml .Values.securityContext | nindent 10 }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        {{- if .Values.extraEnvironmentVars -}}
         env:
-          {{- include "unifi.extraEnvironmentVars" . | nindent 10 }}
-        {{- end }}
+        - name: UNIFI_STDOUT
+          value: "{{ .Values.logToStdout }}"
         ports:
         - name: controller
           containerPort: 8080

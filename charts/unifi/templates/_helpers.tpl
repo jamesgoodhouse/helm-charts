@@ -60,15 +60,3 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
-
-{{/*
-Inject extra environment vars in the format key:value, if populated
-*/}}
-{{- define "unifi.extraEnvironmentVars" -}}
-{{- if .Values.extraEnvironmentVars -}}
-{{- range $key, $value := .Values.extraEnvironmentVars }}
-- name: {{ printf "%s" $key | replace "." "_" | upper | quote }}
-  value: {{ $value | quote }}
-{{- end }}
-{{- end -}}
-{{- end -}}
