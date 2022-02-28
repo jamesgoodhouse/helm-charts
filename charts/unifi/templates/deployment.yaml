@@ -34,7 +34,7 @@ spec:
         {{- if .extraEnvironmentVars -}}
         env:
           {{- include "vault.extraEnvironmentVars" .Values | nindent 10 }}
-        {{{- end }}}
+        {{- end }}
         ports:
         - name: controller
           containerPort: 8080
